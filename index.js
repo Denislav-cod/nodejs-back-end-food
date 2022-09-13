@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
+const { default: mongoose } = require('mongoose');
 
 dotenv.config();
 
@@ -13,6 +14,13 @@ app.use(bodyParser.json());
 app.use(express.json());
 app.use(cors());
 
-app.listen(PORT, ()=> {
-    console.log(`This is runnig on port: ${PORT}`);
-})
+mongoose.connect(process.env.DB_CONNECTION)
+    .then(() => {
+        app.listen(PORT, () => {
+            console.log(`This is runnig on port: ${PORT}`);
+        })
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+
