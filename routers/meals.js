@@ -9,8 +9,8 @@ router.post("/add-meal", postMeal);
 
 router.get("/:mealId", getMeal);
 
-router.put("/:mealId", updateMeal);
+router.put("/update-meal/:mealId", updateMeal);
 
-router.delete("/:mealId", deleteMeal);
+router.delete("/delete-meal/:mealId", deleteMeal);
 
 module.exports = router;
