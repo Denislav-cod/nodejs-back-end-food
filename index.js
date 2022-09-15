@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
 
 app.use("/meals", mealsRouter);
 
-app.use("/users", mealsRouter);
+app.use("/users", usersRouter);
 
 mongoose.connect(process.env.DB_CONNECTION)
     .then(() => {
