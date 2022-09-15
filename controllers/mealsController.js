@@ -20,7 +20,7 @@ const postMeal = async (req, res) => {
 
     try {
         await meal.save();
-        res.status(200).send(meal);
+        res.status(201).send(meal);
     } catch (error) {
         res.status(500).send(error.message);
     }

@@ -3,7 +3,8 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
-const mealsRouter = require('./routers/meals')
+const mealsRouter = require('./routers/meals');
+const usersRouter = require('./routers/users');
 
 
 dotenv.config();
@@ -16,7 +17,13 @@ app.use(bodyParser.json());
 app.use(express.json());
 app.use(cors());
 
+app.get("/", (req, res) => {
+    res.redirect("/meals");
+});
+
 app.use("/meals", mealsRouter);
+
+app.use("/users", mealsRouter);
 
 mongoose.connect(process.env.DB_CONNECTION)
     .then(() => {
