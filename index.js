@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const mealsRouter = require('./routers/meals');
-const usersRouter = require('./routers/users');
+const userRouter = require('./routers/user');
 
 
 dotenv.config();
@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
 
 app.use("/meals", mealsRouter);
 
-app.use("/users", usersRouter);
+app.use("/user", userRouter);
 
 mongoose.connect(process.env.DB_CONNECTION)
     .then(() => {

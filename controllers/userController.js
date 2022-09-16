@@ -1,5 +1,5 @@
-const e = require("express");
-const Users = require("../models/usersModel");
+
+const User = require("../models/userModel");
 
 const registration = async (req, res) => {
     const { name, email, password } = req.body;
@@ -7,13 +7,13 @@ const registration = async (req, res) => {
         res.status(400).send({ error: "Fill all the inputs" });
         return;
     }
-    const newUser = new Users({
+    const newUser = new User({
         name: name,
         email: email,
         password: password
     });
     try {
-        const emailExisting = await Users.findOne({ email: email });
+        const emailExisting = await User.findOne({ email: email });
         if (emailExisting) {
             res.status(400).send({ error: "This user already registered" });
             return;
@@ -32,7 +32,7 @@ const login = async (req, res) => {
         return;
     }
         try {
-            const user = await Users.findOne({ name: name, password: password });
+            const user = await User.findOne({ name: name, password: password });
             if (!user) {
                 res.status(404).send({ error: "Not found" });
                 return;
