@@ -1,11 +1,11 @@
-
+const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
 
 const registration = async (req, res) => {
     const { name, email, password } = req.body;
     if (!name || !email || !password) {
-        res.status(400).send({ error: "Fill all the inputs" });
-        return;
+        return res.status(400).send({ error: "Fill all the inputs" });
+
     }
     const newUser = new User({
         name: name,
@@ -15,8 +15,8 @@ const registration = async (req, res) => {
     try {
         const emailExisting = await User.findOne({ email: email });
         if (emailExisting) {
-            res.status(400).send({ error: "This user already registered" });
-            return;
+            return res.status(400).send({ error: "This user already registered" });
+
         }
         await newUser.save();
         res.status(201).send({ user: newUser });
@@ -26,22 +26,24 @@ const registration = async (req, res) => {
 }
 
 const login = async (req, res) => {
-    const { name, password } = req.body;
+    const { id, name, password } = req.body;
     if (!name || !password) {
-        res.status(400).send({ error: "Fill all the unputs" });
-        return;
+        return res.status(400).send({ error: "Fill all the unputs" });
+
     }
-        try {
-            const user = await User.findOne({ name: name, password: password });
-            if (!user) {
-                res.status(404).send({ error: "Not found" });
-                return;
-            }
-                res.status(200).send({ user: user });
-        } catch (error) {
-            res.status(404).send({ error: error.message });
+    try {
+        const user = await User.findOne({ name: name, password: password });
+        if (!user) {
+            return res.status(404).send({ error: "Not found" });
+
         }
+        const token = jwt.sign({ id: id, name: name },"superdupersecret");
+        user.token = token;
+        res.status(200).send({token: token});
+    } catch (error) {
+        res.status(500).send({ error: error.message });
     }
+}
 
 
 module.exports = {

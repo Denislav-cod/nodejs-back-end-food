@@ -1,5 +1,6 @@
 const express = require("express");
-const { getMeals, postMeal, getMeal, updateMeal, deleteMeal } = require("../controllers/mealsController")
+const { getMeals, postMeal, getMeal, updateMeal, deleteMeal } = require("../controllers/mealsController");
+const auth = require("../middleware/auth")
 
 const router = express.Router();
 
