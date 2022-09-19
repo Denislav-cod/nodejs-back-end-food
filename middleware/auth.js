@@ -7,7 +7,7 @@ const auth = (req, res, next) => {
         return res.sendStatus(403);
     }
     try {
-        const decode = jwt.verify(token, "superdupersecret");
+        const decode = jwt.verify(token, process.env.SECRET);
         req.user = decode.user;
         next();
     } catch (error) {
