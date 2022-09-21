@@ -11,12 +11,15 @@ const UserSchema = mongoose.Schema({
         trim: true,
         unique: true,
         required: true,
-        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address'],
+        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/],
     },
     password: {
         type: String,
         trim: true,
         required: true
+    },
+    cart: {
+        type: Array
     },
     token: {
         type: String,

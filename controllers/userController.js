@@ -1,6 +1,10 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const User = require("../models/userModel");
+const dotenv = require('dotenv');
+
+// get config vars
+dotenv.config();
 
 const registration = async (req, res) => {
     const { name, email, password } = req.body;
@@ -30,7 +34,7 @@ const registration = async (req, res) => {
 }
 
 const login = async (req, res) => {
-    const { id, name, email, password } = req.body;
+    const { email, password } = req.body;
     if (!email || !password) {
         return res.status(400).send({ error: "Fill all the unputs" });
 
@@ -48,10 +52,13 @@ const login = async (req, res) => {
         if (!compare) {
             return res.status(401).send({ error: "Wrong password" })
         }
-
-        const token = jwt.sign({ id: id, name: name }, process.env.SECRET);
+        const token = jwt.sign({id: user.id, name: user.name, cart: user.cart}, process.env.SECRET);
+        if(!token){
+            return res.status(400).send(token)
+        }
         user.token = token;
-        res.status(200).send({ token: token });
+        user.save();
+        res.status(200).json({ token: token });
     } catch (error) {
         res.status(500).send({ error: error.message });
     }

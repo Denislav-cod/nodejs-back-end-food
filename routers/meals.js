@@ -8,7 +8,7 @@ router.get("/", getMeals);
 
 router.post("/add-meal", postMeal);
 
-router.get("/:mealId", getMeal);
+router.get("/:mealId", auth ,getMeal);
 
 router.put("/update-meal/:mealId", updateMeal);
 
